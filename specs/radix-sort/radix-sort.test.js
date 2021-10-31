@@ -9,8 +9,52 @@
 
 */
 
+//Helper Functions:
+
+// array [1, 35, 321, 2, 434, 1391, 5, 125]
+
+function getDigit(number, place, longestNumber) {
+  // getDigit(1391, 3, 4)
+  // returns 1
+  const numToString = number.toString();
+  const numLength = numToString.length;
+
+  const placeInString = longestNumber - numLength;
+  return numToString[place - placeInString] || 0;
+}
+
+function getLongestNumber(arr) {
+  // returns 4
+  let longest = 0;
+  for (let i = 0; i < arr.length; i++) {
+    let currentLength = arr[i].toString().length;
+    if (currentLength > longest) longest = currentLength;
+  }
+  return longest;
+}
+
 function radixSort(array) {
-  // code goes here
+  // find longest number
+  let longestNum = getLongestNumber(array);
+  // create the buckets needed (array of 10 arrays)
+  let buckets = Array.from({ length: 10 }, () => []);
+  // for loop for the number of iterations needed
+  for (let i = longestNum - 1; i >= 0; i--) {
+    // while loop
+    // enqueue numbers into their buckets
+    while (array.length) {
+      let current = array.shift();
+      buckets[getDigit(current, i, longestNum)].push(current);
+    }
+    // for loop for each bucket
+    //dequeue all items in each bucket
+    for (let j = 0; j < buckets.length; j++) {
+      while (buckets[j].length) {
+        array.push(buckets[j].shift());
+      }
+    }
+  }
+  return array;
 }
 
 // unit tests

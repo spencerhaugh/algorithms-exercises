@@ -8,11 +8,35 @@
 
 const mergeSort = (nums) => {
   // code goes here
+  // base case: length = 1 || 0
+  // break arr into smaller halves
+  // call mergeSort on left && right
+  // return the merge of left and right
+
+  if (nums.length <= 1) return nums;
+
+  const merge = (arr1, arr2) => {
+    let sortedArr = [];
+
+    while (arr1.length && arr2.length) {
+      if (arr1[0] <= arr2[0]) {
+        sortedArr.push(arr1.shift());
+      } else {
+        sortedArr.push(arr2.shift());
+      }
+    }
+    return sortedArr.concat(arr1, arr2);
+  };
+
+  let middle = Math.floor(nums.length / 2);
+  let left = nums.slice(0, middle);
+  let right = nums.slice(middle);
+  return merge(mergeSort(left), mergeSort(right));
 };
 
 // unit tests
 // do not modify the below code
-test.skip("merge sort", function () {
+test("merge sort", function () {
   const nums = [10, 5, 3, 8, 2, 6, 4, 7, 9, 1];
   const ans = mergeSort(nums);
   expect(ans).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);

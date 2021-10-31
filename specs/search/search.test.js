@@ -9,6 +9,24 @@ function linearSearch(id, array) {
 
 function binarySearch(id, array) {
   // code goes here
+  let start = 0;
+  let end = array.length - 1;
+  let middle;
+
+  while (start <= end) {
+    middle = Math.floor((start + end) / 2);
+    console.log(start, middle, end);
+    let element = array[middle];
+
+    if (element.id === id) {
+      return element;
+    } else if (element.id > id) {
+      end = middle - 1;
+    } else {
+      start = middle + 1;
+    }
+  }
+  return undefined;
 }
 
 // unit tests

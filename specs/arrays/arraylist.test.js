@@ -19,6 +19,36 @@
 
 class ArrayList {
   // code goes here
+  constructor() {
+    this.length = 0;
+    this.nodes = {};
+  }
+
+  push(value) {
+    this.nodes[this.length] = value;
+    this.length++;
+  }
+
+  pop() {
+    let response = this.nodes[this.length - 1];
+    this.nodes[this.length - 1] = null;
+    this.length--;
+    return response;
+  }
+
+  get(value) {
+    return this.nodes[value];
+  }
+
+  delete(value) {
+    let response = this.nodes[value];
+    for (let i = value; i < this.length; i++) {
+      this.nodes[i] = this.nodes[i + 1];
+    }
+    this.nodes[this.length - 1] = null;
+    this.length--;
+    return response;
+  }
 }
 
 // unit tests
